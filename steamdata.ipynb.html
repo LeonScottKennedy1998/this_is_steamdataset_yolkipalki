@@ -1,0 +1,286 @@
+<html>
+<head>
+<title>steamdata.ipynb</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #7a7e85;}
+.s1 { color: #bcbec4;}
+.s2 { color: #cf8e6d;}
+.s3 { color: #bcbec4;}
+.s4 { color: #6aab73;}
+.s5 { color: #2aacb8;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+steamdata.ipynb</font>
+</center></td></tr></table>
+<pre><span class="s0">#%% md 
+</span>
+<span class="s0">#%% md 
+</span><span class="s1">Цель работы: проанализировать выбранный датасет по играм из стима, используя библиотеку pandas и работая с файлом типа Jupyter Notebook. А именно нужно сделать:  
+вывести датасет и описать его,  
+вывести размерность массива,  
+вывести наименование всех колонок,  
+написать что они означают в этом датасете,  
+вывести все уникальные значения,  
+отсортировать по определенным параметрам,  
+удалить ненужные столбцы или строчки,  
+заменить определенные значения в датасете (например, пустые),  
+удалить дубликаты,  
+провести анализ с помощью функций info,  
+провести анализ с помощью функций describe,  
+провести выборку данных по строкам и столбцам с помощью loc,  
+сохранить новый датасет, сделать вывод по каждому пункту и описать все. 
+ 
+</span><span class="s0">#%% 
+</span><span class="s2">import </span><span class="s1">pandas </span><span class="s2">as </span><span class="s1">pn</span>
+<span class="s2">import </span><span class="s1">numpy </span><span class="s2">as </span><span class="s1">np</span>
+<span class="s1">steam </span><span class="s3">= </span><span class="s1">pn</span><span class="s3">.</span><span class="s1">read_csv</span><span class="s3">(</span><span class="s4">'steam_games.csv'</span><span class="s3">)</span>
+
+<span class="s1">steam</span>
+<span class="s0">#%% md 
+</span><span class="s1">Это датасет по играм из стима, он содержит ссылку на игру, её тип, название, краткое описание игры, недавние отзывы, все отзывы, дата релиза, разработчик, издатель, популярные тэги, игровые детали, языки, достижения, жанры, описание игры, наличие взрослого контента, минимальные требования, рекомендованные требования, оригинальная цена, цена со скидкой. 
+</span><span class="s0">#%% 
+</span><span class="s1">steam</span><span class="s3">.</span><span class="s1">shape</span>
+
+<span class="s0">#%% md 
+</span><span class="s1">Размерность массива 
+</span><span class="s0">#%% 
+</span><span class="s1">steam</span><span class="s3">.</span><span class="s1">columns</span>
+
+<span class="s0">#%% md 
+</span><span class="s1">url - ссылка на игру 
+types - тип (игра, набор, дополнение)  
+name - название игры 
+desc_snippet - краткое описание (небольшой кусочек описания игры) 
+recent_reviews - недавние отзывы 
+all_reviews - все отзывы 
+release_date - дата релиза 
+developer - разработчик 
+publisher - издатель 
+popular_tags - популярные тэги 
+game_details - игровые детали 
+languages - доступные языки 
+achivements - количество достижений 
+genre - жанры 
+game_description - описание игры 
+mature_content - наличие взрослого контента 
+minimum_requirements - минимальные требования 
+recommended_requirements - рекомендуемые требования 
+original_price - оригинальная цена 
+discount_price - цена по скидке 
+</span><span class="s0">#%% 
+</span><span class="s1">steam</span><span class="s3">.</span><span class="s1">nunique</span><span class="s3">()</span>
+<span class="s0">#%% md 
+</span><span class="s1">Уникальные значения во всём датасете 
+</span><span class="s0">#%% 
+</span><span class="s1">steam</span><span class="s3">[</span><span class="s4">'url'</span><span class="s3">].</span><span class="s1">unique</span><span class="s3">()</span>
+
+<span class="s0">#%% md 
+</span><span class="s1">Уникальные значения в столбце url 
+</span><span class="s0">#%% 
+</span><span class="s1">steam</span><span class="s3">[</span><span class="s4">'types'</span><span class="s3">].</span><span class="s1">unique</span><span class="s3">()</span>
+
+<span class="s0">#%% md 
+</span><span class="s1">Уникальные значения для столбца types 
+ 
+</span><span class="s0">#%% 
+</span><span class="s1">steam</span><span class="s3">[</span><span class="s4">'name'</span><span class="s3">].</span><span class="s1">unique</span><span class="s3">()</span>
+
+<span class="s0">#%% md 
+</span><span class="s1">Уникальные значения для столбца name 
+</span><span class="s0">#%% 
+</span><span class="s1">steam</span><span class="s3">[</span><span class="s4">'desc_snippet'</span><span class="s3">].</span><span class="s1">unique</span><span class="s3">()</span>
+
+<span class="s0">#%% md 
+</span><span class="s1">Уникальные значения для столбца desc_snippet 
+ 
+</span><span class="s0">#%% 
+</span><span class="s1">steam</span><span class="s3">[</span><span class="s4">'recent_reviews'</span><span class="s3">].</span><span class="s1">unique</span><span class="s3">()</span>
+<span class="s0">#%% md 
+</span><span class="s1">Уникальные значения для столбца recent_reviews 
+ 
+</span><span class="s0">#%% 
+</span><span class="s1">steam</span><span class="s3">[</span><span class="s4">'all_reviews'</span><span class="s3">].</span><span class="s1">unique</span><span class="s3">()</span>
+
+<span class="s0">#%% md 
+</span><span class="s1">Уникальные значения для столбца all_reviews 
+ 
+</span><span class="s0">#%% 
+</span><span class="s1">steam</span><span class="s3">[</span><span class="s4">'release_date'</span><span class="s3">].</span><span class="s1">unique</span><span class="s3">()</span>
+
+<span class="s0">#%% md 
+</span><span class="s1">Уникальные значения для столбца release_date 
+ 
+</span><span class="s0">#%% 
+</span><span class="s1">steam</span><span class="s3">[</span><span class="s4">'developer'</span><span class="s3">].</span><span class="s1">unique</span><span class="s3">()</span>
+
+<span class="s0">#%% md 
+</span><span class="s1">Уникальные значения для столбца developer 
+</span><span class="s0">#%% 
+</span><span class="s1">steam</span><span class="s3">[</span><span class="s4">'publisher'</span><span class="s3">].</span><span class="s1">unique</span><span class="s3">()</span>
+
+<span class="s0">#%% md 
+</span><span class="s1">Уникальные значения для столбца publisher 
+</span><span class="s0">#%% 
+</span><span class="s1">steam</span><span class="s3">[</span><span class="s4">'popular_tags'</span><span class="s3">].</span><span class="s1">unique</span><span class="s3">()</span>
+
+<span class="s0">#%% md 
+</span><span class="s1">Уникальные значения для столбца popular_tags 
+</span><span class="s0">#%% 
+</span><span class="s1">steam</span><span class="s3">[</span><span class="s4">'game_details'</span><span class="s3">].</span><span class="s1">unique</span><span class="s3">()</span>
+
+<span class="s0">#%% md 
+</span><span class="s1">Уникальные значения для столбца game_details 
+</span><span class="s0">#%% 
+</span><span class="s1">steam</span><span class="s3">[</span><span class="s4">'languages'</span><span class="s3">].</span><span class="s1">unique</span><span class="s3">()</span>
+
+<span class="s0">#%% md 
+</span><span class="s1">Уникальные значения для столбца languages 
+</span><span class="s0">#%% 
+</span><span class="s1">steam</span><span class="s3">[</span><span class="s4">'achievements'</span><span class="s3">].</span><span class="s1">unique</span><span class="s3">()</span>
+<span class="s0">#%% md 
+</span><span class="s1">Уникальные значения для столбца achievements 
+</span><span class="s0">#%% 
+</span><span class="s1">steam</span><span class="s3">[</span><span class="s4">'genre'</span><span class="s3">].</span><span class="s1">unique</span><span class="s3">()</span>
+
+<span class="s0">#%% md 
+</span>
+<span class="s0">#%% md 
+</span><span class="s1">Уникальные значения для столбца genre 
+</span><span class="s0">#%% 
+</span><span class="s1">steam</span><span class="s3">[</span><span class="s4">'game_description'</span><span class="s3">].</span><span class="s1">unique</span><span class="s3">()</span>
+<span class="s0">#%% md 
+</span><span class="s1">Уникальные значения для столбца game_description 
+ 
+</span><span class="s0">#%% 
+</span><span class="s1">steam</span><span class="s3">[</span><span class="s4">'mature_content'</span><span class="s3">].</span><span class="s1">unique</span><span class="s3">()</span>
+
+<span class="s0">#%% md 
+</span>
+<span class="s0">#%% md 
+</span><span class="s1">Уникальные значения для столбца mature_content 
+ 
+</span><span class="s0">#%% 
+</span><span class="s1">steam</span><span class="s3">[</span><span class="s4">'minimum_requirements'</span><span class="s3">].</span><span class="s1">unique</span><span class="s3">()</span>
+
+<span class="s0">#%% md 
+</span><span class="s1">Уникальные значения для столбца minimum_requirements 
+</span><span class="s0">#%% 
+</span><span class="s1">steam</span><span class="s3">[</span><span class="s4">'recommended_requirements'</span><span class="s3">].</span><span class="s1">unique</span><span class="s3">()</span>
+
+<span class="s0">#%% md 
+</span><span class="s1">Уникальные значения для столбца recommended_requirements 
+</span><span class="s0">#%% 
+</span><span class="s1">steam</span><span class="s3">[</span><span class="s4">'original_price'</span><span class="s3">].</span><span class="s1">unique</span><span class="s3">()</span>
+
+<span class="s0">#%% md 
+</span><span class="s1">Уникальные значения для столбца original_price 
+</span><span class="s0">#%% 
+</span><span class="s1">steam</span><span class="s3">[</span><span class="s4">'discount_price'</span><span class="s3">].</span><span class="s1">unique</span><span class="s3">()</span>
+<span class="s0">#%% md 
+</span><span class="s1">Уникальные значения для столбца discount_price 
+</span><span class="s0">#%% 
+</span><span class="s1">steam</span><span class="s3">.</span><span class="s1">sort_values</span><span class="s3">(</span><span class="s1">by</span><span class="s3">=</span><span class="s4">'name'</span><span class="s3">)</span>
+<span class="s0">#%% md 
+</span><span class="s1">Сортировка по столбцу name 
+</span><span class="s0">#%% 
+</span><span class="s1">steam</span><span class="s3">.</span><span class="s1">sort_values</span><span class="s3">(</span><span class="s1">by</span><span class="s3">=</span><span class="s4">'achievements'</span><span class="s3">)</span>
+<span class="s0">#%% md 
+</span><span class="s1">Сортировка по столбцу achievements 
+</span><span class="s0">#%% 
+</span><span class="s1">steam</span><span class="s3">[</span><span class="s4">'name'</span><span class="s3">]</span>
+<span class="s0">#%% md 
+</span><span class="s1">Вывод только столбца name 
+</span><span class="s0">#%% 
+</span><span class="s1">steam</span><span class="s3">[</span><span class="s1">steam</span><span class="s3">[</span><span class="s4">'developer'</span><span class="s3">]==</span><span class="s4">'CAPCOM Co., Ltd.'</span><span class="s3">]</span>
+<span class="s0">#%% md 
+</span><span class="s1">Фильтрация с условием, что разработчик CAPCOM Co., Ltd.  
+</span><span class="s0">#%% 
+</span><span class="s1">steam</span><span class="s3">.</span><span class="s1">drop</span><span class="s3">(</span><span class="s1">columns</span><span class="s3">=[</span><span class="s4">'mature_content'</span><span class="s3">,</span><span class="s4">'minimum_requirements'</span><span class="s3">,</span><span class="s4">'recommended_requirements'</span><span class="s3">,</span><span class="s4">'desc_snippet'</span><span class="s3">,</span><span class="s4">'popular_tags'</span><span class="s3">],</span><span class="s1">inplace</span><span class="s3">=</span><span class="s2">True</span><span class="s3">)</span>
+<span class="s1">steam</span>
+<span class="s0">#%% md 
+</span><span class="s1">Были удалены столбцы mature_content,minimum_requirements,'recommended_requirements,desc_snippet,popular_tags 
+</span><span class="s0">#%% 
+</span><span class="s1">steam </span><span class="s3">= </span><span class="s1">steam</span><span class="s3">.</span><span class="s1">replace</span><span class="s3">({</span><span class="s4">'achievements'</span><span class="s3">:</span><span class="s1">np</span><span class="s3">.</span><span class="s1">nan</span><span class="s3">},</span><span class="s4">'No achievements'</span><span class="s3">)</span>
+<span class="s1">steam </span><span class="s3">= </span><span class="s1">steam</span><span class="s3">.</span><span class="s1">replace</span><span class="s3">({</span><span class="s4">'recent_reviews'</span><span class="s3">:</span><span class="s1">np</span><span class="s3">.</span><span class="s1">nan</span><span class="s3">},</span><span class="s4">'No reviews'</span><span class="s3">)</span>
+<span class="s1">steam </span><span class="s3">= </span><span class="s1">steam</span><span class="s3">.</span><span class="s1">replace</span><span class="s3">({</span><span class="s4">'all_reviews'</span><span class="s3">:</span><span class="s1">np</span><span class="s3">.</span><span class="s1">nan</span><span class="s3">},</span><span class="s4">'No reviews'</span><span class="s3">)</span>
+<span class="s1">steam </span><span class="s3">= </span><span class="s1">steam</span><span class="s3">.</span><span class="s1">replace</span><span class="s3">({</span><span class="s4">'release_date'</span><span class="s3">:</span><span class="s1">np</span><span class="s3">.</span><span class="s1">nan</span><span class="s3">},</span><span class="s4">'No release date'</span><span class="s3">)</span>
+<span class="s1">steam </span><span class="s3">= </span><span class="s1">steam</span><span class="s3">.</span><span class="s1">replace</span><span class="s3">({</span><span class="s4">'release_date'</span><span class="s3">:</span><span class="s1">np</span><span class="s3">.</span><span class="s1">nan</span><span class="s3">},</span><span class="s4">'No release date'</span><span class="s3">)</span>
+<span class="s1">steam </span><span class="s3">= </span><span class="s1">steam</span><span class="s3">.</span><span class="s1">replace</span><span class="s3">({</span><span class="s4">'game_description'</span><span class="s3">:</span><span class="s1">np</span><span class="s3">.</span><span class="s1">nan</span><span class="s3">},</span><span class="s4">'No game description'</span><span class="s3">)</span>
+<span class="s1">steam </span><span class="s3">= </span><span class="s1">steam</span><span class="s3">.</span><span class="s1">replace</span><span class="s3">({</span><span class="s4">'original_price'</span><span class="s3">:</span><span class="s1">np</span><span class="s3">.</span><span class="s1">nan</span><span class="s3">},</span><span class="s4">'No price'</span><span class="s3">)</span>
+<span class="s1">steam </span><span class="s3">= </span><span class="s1">steam</span><span class="s3">.</span><span class="s1">replace</span><span class="s3">({</span><span class="s4">'discount_price'</span><span class="s3">:</span><span class="s1">np</span><span class="s3">.</span><span class="s1">nan</span><span class="s3">},</span><span class="s4">'No price'</span><span class="s3">)</span>
+<span class="s1">steam </span><span class="s3">= </span><span class="s1">steam</span><span class="s3">.</span><span class="s1">replace</span><span class="s3">({</span><span class="s4">'types'</span><span class="s3">:</span><span class="s1">np</span><span class="s3">.</span><span class="s1">nan</span><span class="s3">}, </span><span class="s4">'No type'</span><span class="s3">)</span>
+<span class="s1">steam </span><span class="s3">= </span><span class="s1">steam</span><span class="s3">.</span><span class="s1">replace</span><span class="s3">({</span><span class="s4">'popular_tags'</span><span class="s3">:</span><span class="s1">np</span><span class="s3">.</span><span class="s1">nan</span><span class="s3">},</span><span class="s4">'No tags'</span><span class="s3">)</span>
+<span class="s1">steam</span>
+<span class="s0">#%% md 
+</span><span class="s1">Были заменены пустые значения NaN на другие, непустые 
+</span><span class="s0">#%% 
+</span><span class="s1">steam</span><span class="s3">.</span><span class="s1">drop_duplicates</span><span class="s3">()</span>
+<span class="s0">#%% md 
+</span><span class="s1">Функция удаляет дубликаты (но дубликатов нет) 
+</span><span class="s0">#%% 
+</span><span class="s1">steam</span><span class="s3">.</span><span class="s1">info</span><span class="s3">()</span>
+<span class="s0">#%% md 
+</span><span class="s1">Анализ с помощью функций info 
+info() выводит информацию в следующем формате: 
+Количество непустых значений в каждом столбце 
+Тип данных каждого столбца 
+Общее количество столбцов 
+Количество использованной памяти 
+</span><span class="s0">#%% 
+</span><span class="s1">steam</span><span class="s3">.</span><span class="s1">describe</span><span class="s3">()</span>
+<span class="s0">#%% md 
+</span><span class="s1">Анализ с помощью функций describe 
+count: Количество непустых (не-NaN) значений в столбце.  
+unique: количество уникальных значений 
+top:первое значение в датасете 
+freq: частота использования 
+ 
+</span><span class="s0">#%% 
+</span><span class="s1">row_data </span><span class="s3">= </span><span class="s1">steam</span><span class="s3">.</span><span class="s1">loc</span><span class="s3">[</span><span class="s5">0</span><span class="s3">]</span>
+<span class="s1">row_data</span>
+<span class="s0">#%% md 
+</span><span class="s1">Выбор определенной строки по метке индекса, используя loc 
+</span><span class="s0">#%% 
+</span><span class="s1">steamset </span><span class="s3">= </span><span class="s1">steam</span><span class="s3">.</span><span class="s1">loc</span><span class="s3">[[</span><span class="s5">0</span><span class="s3">,</span><span class="s5">1</span><span class="s3">,</span><span class="s5">2</span><span class="s3">],[</span><span class="s4">'name'</span><span class="s3">,</span><span class="s4">'developer'</span><span class="s3">,</span><span class="s4">'publisher'</span><span class="s3">]]</span>
+<span class="s1">steamset</span>
+<span class="s0">#%% md 
+</span><span class="s1">Выбор определенных строк и столбцов, используя loc 
+</span><span class="s0">#%% 
+</span><span class="s1">capcom_steam </span><span class="s3">= </span><span class="s1">steam</span><span class="s3">.</span><span class="s1">loc</span><span class="s3">[</span><span class="s1">steam</span><span class="s3">[</span><span class="s4">'developer'</span><span class="s3">]==</span><span class="s4">'CAPCOM Co., Ltd.'</span><span class="s3">]</span>
+<span class="s1">capcom_steam</span>
+<span class="s0">#%% md 
+</span><span class="s1">Выбор строк с определенным условием, используя loc 
+</span><span class="s0">#%% 
+</span><span class="s1">value </span><span class="s3">= </span><span class="s1">steam</span><span class="s3">.</span><span class="s1">loc</span><span class="s3">[</span><span class="s5">6</span><span class="s3">,</span><span class="s4">'developer'</span><span class="s3">]</span>
+<span class="s1">value</span>
+<span class="s0">#%% md 
+</span><span class="s1">Выбор конкретной ячейки данных, используя loc 
+</span><span class="s0">#%% 
+</span><span class="s1">new_value </span><span class="s3">= </span><span class="s1">steam</span><span class="s3">.</span><span class="s1">loc</span><span class="s3">[</span><span class="s5">6</span><span class="s3">,</span><span class="s4">'developer'</span><span class="s3">] = </span><span class="s4">'CAPCOM THE BEST GAME EVER'</span>
+<span class="s1">steam</span>
+<span class="s0">#%% md 
+</span><span class="s1">Обновление данных с использованием loc 
+</span><span class="s0">#%% 
+</span><span class="s1">steam</span><span class="s3">.</span><span class="s1">to_csv</span><span class="s3">(</span><span class="s4">'new_steam.csv'</span><span class="s3">,</span><span class="s1">index </span><span class="s3">= </span><span class="s2">False</span><span class="s3">)</span>
+<span class="s0">#%% md 
+</span><span class="s1">Вывод: в ходе работы был проанализирован датасет по стиму, была использована библиотека pandas. Были выполнены следующий цели:  
+вывести датасет и описать его,  
+вывести размерность массива,  
+вывести наименование всех колонок,  
+написать что они означают в этом датасете,  
+вывести все уникальные значения,  
+отсортировать по определенным параметрам,  
+удалить ненужные столбцы или строчки,  
+заменить определенные значения в датасете (например, пустые),  
+удалить дубликаты,  
+провести анализ с помощью функций info,  
+провести анализ с помощью функций describe,  
+провести выборку данных по строкам и столбцам с помощью loc,  
+сохранить новый датасет, сделать вывод по каждому пункту и описать все.</span></pre>
+</body>
+</html>
